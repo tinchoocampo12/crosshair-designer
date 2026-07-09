@@ -1,0 +1,291 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #111318;
+  --panel: #181b22;
+  --panel-soft: #20242d;
+  --border: #2c313b;
+  --text: #f1f5f9;
+  --muted: #9aa3b2;
+  --accent: #4f8cff;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   DISEÑADOR
+========================= */
+
+body.designer-mode {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+}
+
+/* =========================
+   PANEL
+========================= */
+
+.panel {
+  padding: 28px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 6px;
+  margin-bottom: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.control {
+  margin-bottom: 20px;
+}
+
+.control label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: #d6dbe4;
+  font-size: 14px;
+}
+
+.control label span {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.control input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.control.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.control.row label {
+  margin: 0;
+}
+
+.control input[type='color'] {
+  width: 46px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.control input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 11px 14px;
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.hint {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.preview-card {
+  position: relative;
+  width: 680px;
+  height: 440px;
+  border-radius: 12px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    #151922;
+  background-size: 32px 32px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.preview-card::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(-50%);
+}
+
+.preview-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-50%);
+}
+
+/* =========================
+   OVERLAY
+========================= */
+
+body.overlay-mode {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: none;
+}
+
+.overlay-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* =========================
+   CROSSHAIR
+========================= */
+
+.crosshair {
+  --length: 14px;
+  --thickness: 3px;
+  --gap: 6px;
+  --opacity: 0.9;
+  --color: #00ff66;
+  --offset-x: 0px;
+  --offset-y: 0px;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  opacity: var(--opacity);
+  pointer-events: none;
+  transform: translate(var(--offset-x), var(--offset-y));
+  z-index: 10;
+}
+
+.overlay-root .crosshair {
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
+}
+
+.line {
+  position: absolute;
+  background: var(--color);
+  border-radius: 999px;
+}
+
+.crosshair.with-outline .line,
+.crosshair.with-outline .dot {
+  box-shadow: 0 0 0 1px #000;
+}
+
+.line.top,
+.line.bottom {
+  width: var(--thickness);
+  height: var(--length);
+  left: calc(var(--thickness) / -2);
+}
+
+.line.top {
+  bottom: var(--gap);
+}
+
+.line.bottom {
+  top: var(--gap);
+}
+
+.line.left,
+.line.right {
+  width: var(--length);
+  height: var(--thickness);
+  top: calc(var(--thickness) / -2);
+}
+
+.line.left {
+  right: var(--gap);
+}
+
+.line.right {
+  left: var(--gap);
+}
+
+.dot {
+  position: absolute;
+  width: var(--thickness);
+  height: var(--thickness);
+  left: calc(var(--thickness) / -2);
+  top: calc(var(--thickness) / -2);
+  background: var(--color);
+  border-radius: 50%;
+}
+
+.crosshair.hide-dot .dot {
+  display: none;
+}
